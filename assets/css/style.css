@@ -1,3 +1,15 @@
-#trivia {
+body {
+    margin: 0;
+    background: url('../images/636619090585467427-2SEINFELD.jpg');
+    background-size: 100%;
+    background-repeat:no-repeat;
+    display: compact;
+}
+
+#trivia, #submit {
     display: none;
+}
+
+#submit {
+    text-align: center;
 }

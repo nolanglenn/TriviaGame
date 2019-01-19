@@ -1,7 +1,7 @@
 // Declare and store possible trivia questions and their respective answers
-const quizContainer = $("#trivia");
+const quizContainer = document.getElementById('trivia');
 const submitButton = $("#submit");
-const resultsContainer = $("#results");
+const resultsContainer = document.getElementById('results');
 
 const questions = [
   {
@@ -44,6 +44,9 @@ const questions = [
 function beginTrivia(){
 
     $("#trivia").css('display', 'block');
+    $("#submit").css('display', 'block');
+    $(".begin").css('display', 'none');
+    $(".description").css('display', 'none');
 
     const output = [];
 
@@ -71,8 +74,8 @@ function beginTrivia(){
         }
     );
 
-    // quizContainer.innerHTML = output.join('');
-    $("#trivia").append(output);
+    
+    quizContainer.innerHTML = output.join('');
 };
 
 function showResults(){
@@ -98,8 +101,39 @@ function showResults(){
     });
 
     resultsContainer.innerHTML = numCorrect + ' out of ' + questions.length;
+    // Create a Rety button next to Submit
+    $('<button>', {
+        text: 'Retry',
+        id: 'retry',
+        click: beginTrivia })
 };
 
-$(".begin").on("click", beginTrivia());
+// Timer
+var number = 30;
+
+var intervalId;
+
+$("#submit").on("click", stop);
+$(".begin").on("click", run);
+
+function run() {
+    intervalId = setInterval(decrement, 1000);
+}
+
+function decrement() {
+    number--;
+    $("#show-number").html("<h2>" + number + "</h2>");
+    if (number === 0) {
+    stop();
+    if(!alert("Time Up! Click ok to try again.")){window.location.reload();}
+    }
+    
+}
+
+function stop() {
+    clearInterval(intervalId);
+}
+
+$(".begin").on("click", beginTrivia);
 
 $("#submit").on("click", showResults);
